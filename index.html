@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>calculadora de preço · souve studio</title>
+  <meta name="description" content="calculadora de preço de venda da souve studio, objetos autorais impressos em 3d.">
+  <meta name="theme-color" content="#F4EFE8">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23F4EFE8'/%3E%3Ctext x='8' y='23' font-family='Georgia,serif' font-size='22' fill='%232B2B2B'%3Es%3C/text%3E%3Ccircle cx='24' cy='21' r='2.5' fill='%23C28B73'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --linho: #F4EFE8;
+      --areia: #D9C9B3;
+      --terracota: #C28B73;
+      --cacau: #6B4E36;
+      --grafite: #2B2B2B;
+      --linho-suave: #FAF6F0;
+      --linha-sutil: #E5DDD0;
+
+      --serif: 'Fraunces', Georgia, 'Times New Roman', serif;
+      --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { -webkit-text-size-adjust: 100%; }
+
+    body {
+      margin: 0;
+      background: var(--linho);
+      color: var(--grafite);
+      font-family: var(--sans);
+      font-weight: 400;
+      font-size: 15px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 48px 32px 64px;
+    }
+
+    /* ── cabeçalho ── */
+    header { text-align: center; margin-bottom: 48px; }
+
+    .logo {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 8px;
+      margin: 0 0 48px;
+      color: var(--grafite);
+      text-decoration: none;
+    }
+    .logo-souve {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: 32px;
+      line-height: 1;
+      letter-spacing: -0.01em;
+    }
+    .logo-souve span { color: var(--terracota); }
+    .logo-studio {
+      font-family: var(--sans);
+      font-weight: 400;
+      font-size: 10px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--cacau);
+    }
+
+    h1 {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: 36px;
+      line-height: 1.15;
+      margin: 0 0 16px;
+      letter-spacing: -0.01em;
+    }
+    h1 em { font-style: italic; font-weight: 300; color: var(--cacau); }
+
+    .subtitle {
+      font-size: 14px;
+      color: var(--cacau);
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* ── seções ── */
+    section { margin-bottom: 48px; }
+
+    h2 {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: 20px;
+      line-height: 1.3;
+      margin: 0 0 24px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--linha-sutil);
+    }
+
+    .fields { display: grid; gap: 24px; }
+
+    .field label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--cacau);
+      margin-bottom: 8px;
+    }
+
+    .field input {
+      width: 100%;
+      font-family: var(--sans);
+      font-size: 15px;
+      color: var(--grafite);
+      background: var(--linho-suave);
+      border: 1px solid var(--linha-sutil);
+      border-radius: 8px;
+      padding: 14px 16px;
+      outline: none;
+      appearance: none;
+      -moz-appearance: textfield;
+      transition: border-color 0.3s ease;
+    }
+    .field input::-webkit-outer-spin-button,
+    .field input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    .field input::placeholder { color: var(--cacau); opacity: 0.55; }
+    .field input:hover { border-color: var(--areia); }
+    .field input:focus { border-color: var(--cacau); }
+    .field input:focus-visible { box-shadow: 0 0 0 3px rgba(107, 78, 54, 0.12); }
+
+    .note {
+      font-size: 12px;
+      font-style: italic;
+      color: var(--cacau);
+      margin: 0 0 16px;
+    }
+
+    .card {
+      background: var(--linho-suave);
+      border: 1px solid var(--linha-sutil);
+      border-radius: 12px;
+      padding: 24px;
+    }
+    .card .field input { background: var(--linho); }
+
+    .reset {
+      margin-top: 24px;
+      background: none;
+      border: 0;
+      padding: 0;
+      font-family: var(--sans);
+      font-size: 12px;
+      color: var(--cacau);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: var(--areia);
+      cursor: pointer;
+      transition: text-decoration-color 0.3s ease;
+    }
+    .reset:hover { text-decoration-color: var(--cacau); }
+    .reset:focus-visible { outline: 2px solid var(--cacau); outline-offset: 4px; border-radius: 2px; }
+
+    /* ── markup ── */
+    .pills {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    .pill {
+      font-family: var(--sans);
+      font-size: 15px;
+      font-weight: 500;
+      padding: 14px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--cacau);
+      background: transparent;
+      color: var(--cacau);
+      cursor: pointer;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    .pill:hover { background: rgba(107, 78, 54, 0.08); }
+    .pill[aria-checked="true"] { background: var(--cacau); color: var(--linho); }
+    .pill:focus-visible { outline: 2px solid var(--cacau); outline-offset: 3px; }
+
+    .markup-hint {
+      font-size: 12px;
+      color: var(--cacau);
+      margin: 16px 0 0;
+      min-height: 18px;
+    }
+
+    /* ── resultado ── */
+    .result {
+      background: var(--cacau);
+      color: var(--linho);
+      border-radius: 12px;
+      padding: 32px;
+    }
+    .result-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      opacity: 0.8;
+      margin: 0 0 8px;
+    }
+    .result-product {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 15px;
+      opacity: 0.85;
+      margin: 0 0 8px;
+    }
+    .result-product:empty { display: none; }
+    .result-value {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: 56px;
+      line-height: 1.05;
+      margin: 0;
+      letter-spacing: -0.02em;
+      font-variant-numeric: lining-nums;
+      word-break: break-word;
+    }
+    .divider {
+      height: 1px;
+      background: rgba(244, 239, 232, 0.2);
+      border: 0;
+      margin: 24px 0;
+    }
+    .breakdown {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px 16px;
+      margin: 0;
+      font-size: 13px;
+      opacity: 0.85;
+    }
+    .breakdown dt, .breakdown dd { margin: 0; }
+    .breakdown dd { text-align: right; font-variant-numeric: tabular-nums; }
+    .breakdown .strong { font-weight: 500; }
+    .breakdown .gap { margin-top: 8px; }
+    .result-footer {
+      font-size: 12px;
+      font-style: italic;
+      opacity: 0.8;
+      margin: 0;
+    }
+
+    /* ── fórmula ── */
+    .formula {
+      font-size: 11px;
+      line-height: 1.7;
+      color: var(--cacau);
+      background: rgba(217, 201, 179, 0.3);
+      border-radius: 6px;
+      padding: 16px;
+      margin: 0;
+    }
+    .formula strong { font-weight: 500; display: block; margin-bottom: 8px; }
+    .formula span { display: block; }
+
+    footer {
+      text-align: center;
+      font-size: 11px;
+      color: var(--cacau);
+      opacity: 0.8;
+      margin-top: 64px;
+    }
+
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+    }
+
+    @media (min-width: 720px) {
+      .page { padding: 64px 32px 64px; }
+      h1 { font-size: 42px; }
+      .logo-souve { font-size: 36px; }
+      .fields.two { grid-template-columns: 1fr 1fr; }
+      .fields.two .full { grid-column: 1 / -1; }
+      .card { padding: 32px; }
+      .result { padding: 48px; }
+      .result-value { font-size: 64px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="logo" aria-label="souve studio">
+        <span class="logo-souve" aria-hidden="true">souve<span>.</span></span>
+        <span class="logo-studio" aria-hidden="true">studio</span>
+      </div>
+      <h1>calculadora de preço</h1>
+      <p class="subtitle">o preço de venda ideal aparece na hora, com custo de filamento, energia, máquina, embalagem e markup já incluídos.</p>
+    </header>
+
+    <main>
+      <!-- seção 1 -->
+      <section aria-labelledby="s-produto">
+        <h2 id="s-produto">dados do produto</h2>
+        <div class="fields two">
+          <div class="field full">
+            <label for="nome">nome do produto</label>
+            <input id="nome" type="text" placeholder="porta-treco lina" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="gramas">filamento usado (gramas)</label>
+            <input id="gramas" type="number" inputmode="decimal" min="0" step="any" placeholder="80" required>
+          </div>
+          <div class="field">
+            <label for="horas">tempo de impressão (horas)</label>
+            <input id="horas" type="number" inputmode="decimal" min="0" step="any" placeholder="4.0" required>
+          </div>
+          <div class="field">
+            <label for="embalagem">custo da embalagem (R$)</label>
+            <input id="embalagem" type="number" inputmode="decimal" min="0" step="any" placeholder="4.50">
+          </div>
+          <div class="field">
+            <label for="acabamento">tempo de acabamento (minutos)</label>
+            <input id="acabamento" type="number" inputmode="decimal" min="0" step="any" placeholder="10">
+          </div>
+        </div>
+      </section>
+
+      <!-- seção 2 -->
+      <section aria-labelledby="s-params">
+        <h2 id="s-params">parâmetros de produção</h2>
+        <p class="note">ajuste conforme sua realidade — os valores já vêm preenchidos.</p>
+        <div class="card">
+          <div class="fields two">
+            <div class="field">
+              <label for="precoKg">preço do filamento PLA matte (R$/kg)</label>
+              <input id="precoKg" data-param type="number" inputmode="decimal" min="0" step="any" required>
+            </div>
+            <div class="field">
+              <label for="energia">custo de energia (R$/kWh)</label>
+              <input id="energia" data-param type="number" inputmode="decimal" min="0" step="any" required>
+            </div>
+            <div class="field">
+              <label for="consumo">consumo da impressora (kWh/h)</label>
+              <input id="consumo" data-param type="number" inputmode="decimal" min="0" step="any" required>
+            </div>
+            <div class="field">
+              <label for="desgaste">custo de desgaste da máquina (R$/h)</label>
+              <input id="desgaste" data-param type="number" inputmode="decimal" min="0" step="any" required>
+            </div>
+            <div class="field">
+              <label for="maoObra">custo da mão de obra (R$/h)</label>
+              <input id="maoObra" data-param type="number" inputmode="decimal" min="0" step="any" required>
+            </div>
+            <div class="field">
+              <label for="falha">taxa de falha de impressão (%)</label>
+              <input id="falha" data-param type="number" inputmode="decimal" min="0" step="any" required>
+            </div>
+          </div>
+          <button type="button" class="reset" id="reset">voltar aos valores padrão</button>
+        </div>
+      </section>
+
+      <!-- seção 3 -->
+      <section aria-labelledby="s-markup">
+        <h2 id="s-markup">markup</h2>
+        <div class="pills" role="radiogroup" aria-labelledby="s-markup">
+          <button type="button" class="pill" role="radio" data-markup="3" aria-checked="false" aria-label="markup 3x, margem apertada">3x</button>
+          <button type="button" class="pill" role="radio" data-markup="4" aria-checked="false" aria-label="markup 4x, markup saudável">4x</button>
+          <button type="button" class="pill" role="radio" data-markup="5" aria-checked="false" aria-label="markup 5x, markup ideal">5x</button>
+        </div>
+        <p class="markup-hint" id="markupHint" aria-live="polite"></p>
+      </section>
+
+      <!-- seção 4 -->
+      <section aria-labelledby="s-resultado">
+        <h2 id="s-resultado" class="sr-only">resultado</h2>
+        <div class="result" aria-live="polite">
+          <p class="result-label">preço ideal de venda</p>
+          <p class="result-product" id="rNome"></p>
+          <p class="result-value" id="rPreco">—</p>
+          <hr class="divider">
+          <dl class="breakdown">
+            <dt>custo direto</dt><dd id="rDireto">—</dd>
+            <dt>+ provisão de falha</dt><dd id="rFalha">—</dd>
+            <dt class="strong">= custo total</dt><dd class="strong" id="rTotal">—</dd>
+            <dt class="gap">× markup aplicado</dt><dd class="gap" id="rMarkup">—</dd>
+            <dt class="strong">preço final</dt><dd class="strong" id="rFinal">—</dd>
+          </dl>
+          <hr class="divider">
+          <p class="result-footer" id="rMargem">preencha filamento e tempo de impressão pra ver a margem.</p>
+        </div>
+      </section>
+
+      <!-- seção 5 -->
+      <section aria-label="fórmula">
+        <p class="formula">
+          <strong>fórmula do custo:</strong>
+          <span>(filamento × preço/kg) + (horas × consumo × energia) + (horas × desgaste)</span>
+          <span>+ embalagem + (minutos acabamento × custo mão de obra)</span>
+          <span>× (1 + taxa de falha)</span>
+          <span>× markup</span>
+          <span>= preço de venda</span>
+        </p>
+      </section>
+    </main>
+
+    <footer>uso interno · souve studio · markup multiplicador</footer>
+  </div>
+
+  <script>
+    (() => {
+      const STORAGE_KEY = 'souve-calc-params';
+
+      const DEFAULTS = {
+        precoKg: 115,
+        energia: 0.80,
+        consumo: 0.10,
+        desgaste: 1.50,
+        maoObra: 25,
+        falha: 8,
+        markup: 5
+      };
+
+      const HINTS = {
+        3: 'margem apertada — use só pra produtos de entrada',
+        4: 'markup saudável — padrão da linha souve',
+        5: 'markup ideal — produtos autorais premium'
+      };
+
+      const $ = (id) => document.getElementById(id);
+      const brl = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+      const money = (v) => brl.format(v);
+
+      const productIds = ['gramas', 'horas', 'embalagem', 'acabamento'];
+      const paramIds = ['precoKg', 'energia', 'consumo', 'desgaste', 'maoObra', 'falha'];
+      const pills = [...document.querySelectorAll('.pill')];
+
+      let markup = DEFAULTS.markup;
+
+      // lê um número do campo; vazio ou inválido vira NaN, negativo vira NaN
+      function num(id) {
+        const el = $(id);
+        if (el.value.trim() === '') return NaN;
+        const v = Number(el.value);
+        return Number.isFinite(v) && v >= 0 ? v : NaN;
+      }
+
+      // embalagem e acabamento podem ficar em branco (= 0)
+      function optional(id) {
+        return $(id).value.trim() === '' ? 0 : num(id);
+      }
+
+      function load() {
+        let saved = {};
+        try {
+          saved = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+        } catch (e) { saved = {}; }
+
+        paramIds.forEach((id) => {
+          const v = Number(saved[id]);
+          $(id).value = Number.isFinite(v) && v >= 0 ? v : DEFAULTS[id];
+        });
+        markup = [3, 4, 5].includes(Number(saved.markup)) ? Number(saved.markup) : DEFAULTS.markup;
+      }
+
+      function save() {
+        const data = { markup };
+        paramIds.forEach((id) => {
+          const v = num(id);
+          if (!Number.isNaN(v)) data[id] = v;
+        });
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        } catch (e) { /* armazenamento indisponível: segue sem salvar */ }
+      }
+
+      function renderMarkup() {
+        pills.forEach((p) => {
+          const on = Number(p.dataset.markup) === markup;
+          p.setAttribute('aria-checked', String(on));
+          p.tabIndex = on ? 0 : -1;
+        });
+        $('markupHint').textContent = HINTS[markup];
+      }
+
+      function setMarkup(value, focus) {
+        markup = value;
+        renderMarkup();
+        if (focus) pills.find((p) => Number(p.dataset.markup) === value).focus();
+        save();
+        calc();
+      }
+
+      function clear() {
+        ['rPreco', 'rDireto', 'rFalha', 'rTotal', 'rFinal'].forEach((id) => { $(id).textContent = '—'; });
+        $('rMarkup').textContent = markup + 'x';
+        $('rMargem').textContent = 'preencha filamento e tempo de impressão pra ver a margem.';
+      }
+
+      function calc() {
+        $('rNome').textContent = $('nome').value.trim().toLowerCase();
+
+        const gramas = num('gramas');
+        const horas = num('horas');
+        const embalagem = optional('embalagem');
+        const acabamento = optional('acabamento');
+        const p = {};
+        paramIds.forEach((id) => { p[id] = num(id); });
+
+        const values = [gramas, horas, embalagem, acabamento, ...Object.values(p)];
+        if (values.some(Number.isNaN)) { clear(); return; }
+
+        const custoFilamento = (gramas / 1000) * p.precoKg;
+        const custoEnergia = horas * p.consumo * p.energia;
+        const custoMaquina = horas * p.desgaste;
+        const custoEmbalagem = embalagem;
+        const custoMaoObra = (acabamento / 60) * p.maoObra;
+
+        const custoDireto = custoFilamento + custoEnergia + custoMaquina
+                          + custoEmbalagem + custoMaoObra;
+
+        const provisaoFalha = custoDireto * (p.falha / 100);
+        const custoTotal = custoDireto + provisaoFalha;
+
+        const precoFinal = custoTotal * markup;
+        const margemBruta = precoFinal - custoTotal;
+
+        $('rPreco').textContent = money(precoFinal);
+        $('rDireto').textContent = money(custoDireto);
+        $('rFalha').textContent = money(provisaoFalha);
+        $('rTotal').textContent = money(custoTotal);
+        $('rMarkup').textContent = markup + 'x';
+        $('rFinal').textContent = money(precoFinal);
+        $('rMargem').textContent = 'margem bruta de ' + money(margemBruta) + ' por unidade vendida direto';
+      }
+
+      // eventos
+      ['nome', ...productIds].forEach((id) => $(id).addEventListener('input', calc));
+      paramIds.forEach((id) => $(id).addEventListener('input', () => { save(); calc(); }));
+
+      pills.forEach((p) => {
+        p.addEventListener('click', () => setMarkup(Number(p.dataset.markup)));
+        p.addEventListener('keydown', (e) => {
+          const order = [3, 4, 5];
+          const i = order.indexOf(markup);
+          if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+            e.preventDefault();
+            setMarkup(order[(i + 1) % 3], true);
+          } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+            e.preventDefault();
+            setMarkup(order[(i + 2) % 3], true);
+          }
+        });
+      });
+
+      // bloqueia o sinal de menos nos campos numéricos
+      document.querySelectorAll('input[type="number"]').forEach((el) => {
+        el.addEventListener('keydown', (e) => {
+          if (e.key === '-' || e.key === 'e' || e.key === 'E') e.preventDefault();
+        });
+      });
+
+      $('reset').addEventListener('click', () => {
+        paramIds.forEach((id) => { $(id).value = DEFAULTS[id]; });
+        markup = DEFAULTS.markup;
+        renderMarkup();
+        save();
+        calc();
+      });
+
+      load();
+      renderMarkup();
+      calc();
+    })();
+  </script>
+</body>
+</html>
